@@ -182,58 +182,7 @@ app.post('/inventory/addItem/', function(request, response) {
    }
 });
 
-
-
-// item edit page
-
-// item add page
-
-// shopping list page
-
-// recipe page
-
 // redirect all other requests (including root) to summary page
 app.get('*', function(request, response) {
   response.redirect('/inventory/list');
 });
-
-
-// display on hand items
-
-// increase or decrease on hand items in inventory
-// add item information to the database
-// edit item information in the database
-// display the items onhand
-
-// I want to increase an item to my onhand
-    // 1. scan/enter barcode
-        // the system looks up the bardcode...
-            // barcode doesn't exist in the items database
-                // 1. look up item in API (eventually, costs money)
-                // 2. Allow me to enter information manually
-                    // add the item the database
-                        // increase item on hand by 1
-            // barcode is found in items database
-                // increase item on hand by 1
-    // 2. tap item in list and increase by one
-    // 3. edit onhand amount manually
-
-
-// I want to remove an item from my onhand
-    // scan the barcode
-// if I want to tell it that I am taking one item out, I scan the barcode, it makes sure I have at least one on hand and then decreases the onhand by 1
-// I want to see what I have in my inventory onhand, so I look at my inventory list
-
-// default page is OnHand List
-    // clicking an item shows item details and a +1 -1 buttons to quick add or remove 1 item from onhand
-// add page allows you to add an item to onhand by scanning the barcode or entering UPC manually
-    // page looks up item barcode, adds one to onhand if found
-    // if not found, brings up item add detail modal, with Add Item and Skip buttons
-    // bottom portion of page is a running log of items added
-// remove page allows you to remove an item from the onhand by scanning the barcode or entering UPC manually
-    // page looks to see if you have at least one on hand
-        // if yes, removes one from onhand, tells you how many more you have onhand
-        // if no, tells you you don't have any onhand
-// edit page allows you to edit item details, manually set onhand, and remove an item from the database completely.
-    // shows you entire table of items, even those that have zero onhand
-
