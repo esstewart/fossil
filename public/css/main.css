@@ -1,0 +1,81 @@
+body {
+	padding: 70px 15px 0 15px;
+}
+
+.container-fluid {
+	padding-right: 0;
+}
+
+.navbar {
+	border-bottom: 0;
+	outline: 1px solid #EEE;
+}
+
+.navbar-toggle {
+	margin-right: 35px;
+	border: hidden;
+}
+
+#search {
+	max-width: 100%;
+	position: sticky;
+	top: 51px;
+}
+
+.nav > li > a {
+	padding: 14px 24px 15px 24px;
+	border-width: 0 1px 0 1px;
+	border-style: solid;
+	border-color: #EEE;
+}
+
+.nav-tabs.nav-justified > li > a {
+	border-bottom: 0;
+}
+
+.navbar-brand {
+	padding: 15px 30px 15px 30px;
+	border-right: 1px solid #EEE;
+}
+
+#paginator {
+	max-width: 40%;
+}
+
+.input-group {
+	max-width: 30%;
+}
+
+.row-header {
+	background-color: #DDD;
+}
+
+/*.row-odd {
+	background-color: #EEE;
+}
+
+.row-even {
+	background-color: #AAA;
+}*/
+
+.col-count {
+	text-align: right;
+}
+.col-brand {
+	text-align: left;
+}
+.col-name {
+	text-align: left;
+}
+.col-size {
+	text-align: right;
+}
+.col-note {
+	text-align: center;
+}
+.col-type {
+	text-align: left;
+}
+.col-barcode {
+	text-align: right;
+}

@@ -1,0 +1,32 @@
+<%- include('partials/header', {documentTitle:'Free, Open Source Shopping and Inventory Lister'}) %>
+
+<!-- navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-links"
+                aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" title="Free, Open Source Shopping & Inventory Lister"><i class="fas fa-bone"></i>
+                F.O.S.S.I.L.</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-links">
+            <ul class="nav nav-tabs nav-justified">
+                <li class="nav-item"><a href="/inventory/list" class="nav-item nav-link"><i class="fas fa-list"></i>
+                        List</a></li>
+                <li class="nav-item"><a href="/inventory/add" class="nav-item nav-link"><i class="fas fa-plus"></i> Add</a></li>
+                <li class="nav-item"><a href="/inventory/remove" class="nav-item nav-link"><i class="fas fa-times"></i>
+                        Remove</a></li>
+                <li class="nav-item"><a href="/inventory/edit" class="nav-item nav-link"><i class="fas fa-edit"></i>
+                        Edit</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div>This is the item remove page</div>
+
+<%- include('partials/footer') %>

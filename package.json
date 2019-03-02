@@ -1,0 +1,30 @@
+{
+  "name": "fossilister",
+  "version": "1.0.0",
+  "description": "Free, Open Source Shopping and Inventory Lister",
+  "main": "fossil.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estewdotart/fossil.git"
+  },
+  "keywords": [
+    "inventory",
+    "shopping",
+    "list",
+    "fossil"
+  ],
+  "author": "Edward Stewart",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/estewdotart/fossil/issues"
+  },
+  "homepage": "https://github.com/estewdotart/fossil#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.14"
+  }
+}
