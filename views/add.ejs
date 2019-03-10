@@ -27,14 +27,40 @@
     </div>
 </nav>
 
-<!-- temporary camera section for scanning barcodes -->
-<form id="formAddItem">
-    <div class="form-group">
-        <label for="inpAddItem">Adding item by barcode...</label>
-        <input type="text" class="form-control" id="inpAddItem" placeholder="Enter barcode">
-    </div>
-    <button type="submit" class="btn btn-primary" id="btnAddItem">Add Item</button>
-</form>
 
-<script>inventory.listeners.initAddItemPage()</script>
+<div class="container">
+    <div class="form-group js-add-barcode">
+        <label for="js-add-barcode-inp">Adding item by barcode...</label>
+        <input type="text" class="form-control add-page-input js-add-barcode-inp" placeholder="Enter barcode">
+        <button type="submit" class="btn btn-primary js-add-barcode-btn">Add Item</button>
+    </div>
+    
+    <div class="form-group js-add-item">
+        <div>
+            <label>Item not found...</label>
+        </div>
+        <label class="input-label">Brand *</label>
+        <input type="text" class="form-control add-page-input js-add-item-brand">
+        <label class="input-label">Name *</label>
+        <input type="text" class="form-control add-page-input js-add-item-name">
+        <label class="input-label">Size *</label>
+        <input type="text" class="form-control add-page-input js-add-item-size">
+        <label class="input-label">Barcode *</label>
+        <input type="text" class="form-control add-page-input js-add-item-barcode">
+        <label class="input-label">Count *</label>
+        <input type="number" class="form-control add-page-input js-add-item-count">
+        <label class="input-label">Type</label>
+        <input type="text" class="form-control add-page-input js-add-item-type">
+        <label class="input-label">Note</label>
+        <input type="text" class="form-control add-page-input js-add-item-note">
+        <button type="submit" class="btn btn-primary js-add-item-btn">Add Item</button>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        $('body').addClass('load');
+    });
+    init.addPage();
+</script>
 <%- include('partials/footer') %>

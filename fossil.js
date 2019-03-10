@@ -44,142 +44,98 @@ var fossil_items = new mongoose.Schema ({
     brand   : String,
     name    : String,
     size    : String,
-    note    : String,
-    tags    : String
+    type    : String,
+    note    : String
 });
 
 var Log  = mongoose.model('Log', fossil_log);
 var Item = mongoose.model('Item', fossil_items);
 
+/* 
+  this key is required to do destructive db commands
+  and is meant only as a temporary minor protection 
+  against accidental upsert or delete. Not meant to be
+  any kind of replacement for authentication.
+*/
+var adminKey = '$admin1';
+
 
 // ========================================================
 // routes begin
 // ========================================================
-// summary page
+
 app.get('/inventory/list', function(request, response) {
     response.render('list.ejs');
 });
 
-// add item page
 app.get('/inventory/add', function(request, response) {
     response.render('add.ejs');
 });
 
-// remove item page
 app.get('/inventory/remove', function(request, response) {
     response.render('remove.ejs');
-});
+})
 
-app.get('/inventory/edit', function(request, response) {
-    response.render('edit.ejs');
-});
-
-
-// post route to update item detail
-app.post('inventory/updateItemDetail/', function(request, response) {
-   let brand = request.body.brand,
-       name = request.body.name,
-       size = request.body.size,
-       type = request.body.type,
-       notes = request.body.notes,
-       count = request.body.count,
-       barcode = request.body.barcode;
-   console.log(brand, name, size, type, notes, count, barcode);
-});
-
-//router to load all inventory
-app.get('/inventory/loadOnHand', function(request, response) {
-    Item.find( {count: {$gte: 1}}, function(error, result) {
-      if (error) { console.log("Error: " + error);
-      } else {
-        response.send({item: result});
-      }
-    });
-});
-
-//router to load all inventory
-app.get('/inventory/loadAll', function(request, response) {
-    Item.find({}, function(error, result) {
-      if (error) { console.log("Error: " + error);
-      } else {
-        response.send({item: result});
-      }
-    });
-});
-
-// route to get inventory item details
-app.get('/inventory/getItemDetail/:barcode', function(request, response) {
-    let data = request.params.barcode;
-    console.log("Searching for " + data);
-    Item.find({barcode: data}, function(error, result) {
-        if (error) { console.log("Error: " + error);
-        } else {
-            response.send({item: result});
-        }
-    });
-});
-
-app.get('/inventory/fetchItem/:barcode', function(request, response) {
-    let search = request.params.barcode;
-    switch (search) {
-    case 'all':
-        Item.find({}, function(error, result) {
-            (error) ? response.send(0) : response.send({items: result});
-        });
-        break;
-    case 'onhand':
-        Item.find({count: {$gte: 1}}, function(error, result) {
-            (error) ? response.send(0) : response.send({items: result});
-        });
-        break;
-    default:
-        Item.find({barcode: search}, function(error, result) {
-            (error) ? response.send(0) : response.send({items: result});
-        });
-    }
-});
-
-app.post('/inventory/updateItem/:barcode', function(request, response) {
-    let search = request.params.barcode;
+app.post('/items/create', function(request, response) {
     let item = request.body.item;
-    console.log(item.type);
-    Item.update({barcode: search}, {
-        barcode: item.barcode,
-        count: item.count,
-        brand: item.brand,
-        name: item.name,
-        size: item.size,
-        type: item.type,
-        note: item.note}, function(error, result) {
-            console.log(result);
-            Item.find({barcode: item.barcode}, function(error, result) {
-                console.log(result);
-            })
-            response.send({result: result});
-        });
-
+    console.log(item);
+    Item.create({
+          barcode: item.barcode,
+          count: item.count,
+          brand: item.brand,
+          name: item.name,
+          size: item.size,
+          type: item.type,
+          note: item.note
+      },
+      function(error, result) {
+          (error) ? response.send('There was an error trying to add the item!') : response.send("Item added!");
+      });
 });
 
-app.post('/inventory/addItem/', function(request, response) {
-   let item = request.body.item;
-   if (Item.find({barcode: item.barcode}).length() > 0) {
-       console.log('Item already exists! Skipping insert!');
-       response.send(0);
-   } else {
-       console.log('Inserting new item: '+item);
-       Item.insert({
-           barcode: item.barcode,
-           count: item.count,
-           brand: item.brand,
-           name: item.name,
-           size: item.size,
-           type: item.type,
-           note: item.note
-       },
-      function(error, result) {
-          (error) ? response.send(error) : response.send(1);
-      });
-   }
+app.put('/items/update', function(request, response) {
+    let item = request.body.item;
+    console.log(item);
+    Item.update({ barcode: item[0].barcode }, {
+        _id: item[0]._id,
+        barcode: item[0].barcode,
+        count: item[0].count,
+        brand: item[0].brand,
+        name: item[0].name,
+        size: item[0].size,
+        type: item[0].type,
+        note: item[0].note,
+        __v: item[0].__v
+    },
+    function(error, result) {
+        (error) ? response.send('There was an error trying to update the item!') : response.send("Item updated!");
+    });
+});
+
+app.get('/items/fetch/all', function(request, response) {
+    Item.find({}, function(error, result) {
+      (error) ? response.send(0) : response.send({items: result});
+    });
+});
+
+app.get('/items/fetch/onhand', function(request, response) {
+    Item.find({count:{$gte: 1}}, function(error, result) {
+      (error) ? response.send(0) : response.send({items: result});
+    });
+});
+
+app.get('/items/fetch/:barcode', function(request, response) {
+    Item.find({barcode:request.params.barcode}, function(error, result) {
+      (error) ? response.send(0) : response.send({items: result});
+    });
+});
+
+app.get("/admin/test/:key", function(request, response) {
+    if (request.params.key === adminKey) {
+        response.render('test.ejs');
+    } else {
+        response.redirect('/inventory/list');
+    }
 });
 
 // redirect all other requests (including root) to summary page
